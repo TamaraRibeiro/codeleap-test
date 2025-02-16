@@ -41,7 +41,7 @@ export default function Login({handleOpenModal}: {handleOpenModal: () => void}) 
 
       <span className="text-sm font-semibold text-amethyst-600">
         Don't have an account?{" "}
-        <a href="#" className="underline hover:text-amethyst-900 duration-300">
+        <a href="/create-account" className="underline hover:text-amethyst-900 duration-300">
           SIGN UP
         </a>
       </span>
