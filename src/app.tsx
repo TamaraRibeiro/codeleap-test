@@ -1,7 +1,15 @@
 import { Moon, Sun } from "@phosphor-icons/react";
 import Button from "./components/button";
+import ModalForgotPassword from "./components/modal-forgot-password";
+import { useState } from "react";
 
 export default function App() {
+  const [openModal, setModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    setModalOpen(!openModal);
+  }
+
   return (
     <>
       <div className="bg-amethyst-50 rounded-lg w-full h-screen flex justify-center items-center relative">
@@ -36,7 +44,7 @@ export default function App() {
                 className="bg-amethyst-100 rounded-sm shadow-md"
               />
             </div>
-            <div className="flex flex-col gap-1.5 itemc">
+            <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="password"
                 className="text-950 font-semibold leading-5"
@@ -48,23 +56,28 @@ export default function App() {
                 name="password"
                 className="bg-amethyst-100 rounded-sm shadow-md"
               />
-              <a
-                href="#"
-                className="text-sm font-semibold text-amethyst-600 underline hover:text-amethyst-900 duration-300 text-end mt-0.5"
+              <button
+                onClick={handleOpenModal}
+                className="text-sm font-semibold text-amethyst-600 underline hover:text-amethyst-900 duration-300 text-end mt-0.5 cursor-pointer"
               >
                 Forgot your password?
-              </a>
+              </button>
             </div>
             <Button text="login" />
           </div>
 
           <span className="text-sm font-semibold text-amethyst-600">
             Don't have an account?{" "}
-            <a href="#" className="underline hover:text-amethyst-900 duration-300">
+            <a
+              href="#"
+              className="underline hover:text-amethyst-900 duration-300"
+            >
               SIGN UP
             </a>
           </span>
         </div>
+
+        {openModal && <ModalForgotPassword openModal={handleOpenModal} />}
       </div>
     </>
   );
