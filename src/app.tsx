@@ -2,6 +2,7 @@ import { Moon, Sun } from "@phosphor-icons/react";
 import Button from "./components/button";
 import ModalForgotPassword from "./components/modal-forgot-password";
 import { useState } from "react";
+import Login from "./components/login";
 
 export default function App() {
   const [openModal, setModalOpen] = useState(false);
@@ -30,51 +31,7 @@ export default function App() {
         <div className="space-y-8 flex flex-col items-center">
           <img src="public/codeleap-logo.svg" alt="logo" width={100} />
 
-          <div className="space-y-5 px-2 flex flex-col">
-            <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="username"
-                className="text-950 font-semibold leading-5"
-              >
-                Username:
-              </label>
-              <input
-                type="text"
-                name="username"
-                className="bg-amethyst-100 rounded-sm shadow-md"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="password"
-                className="text-950 font-semibold leading-5"
-              >
-                Password:
-              </label>
-              <input
-                type="password"
-                name="password"
-                className="bg-amethyst-100 rounded-sm shadow-md"
-              />
-              <button
-                onClick={handleOpenModal}
-                className="text-sm font-semibold text-amethyst-600 underline hover:text-amethyst-900 duration-300 text-end mt-0.5 cursor-pointer"
-              >
-                Forgot your password?
-              </button>
-            </div>
-            <Button text="login" />
-          </div>
-
-          <span className="text-sm font-semibold text-amethyst-600">
-            Don't have an account?{" "}
-            <a
-              href="#"
-              className="underline hover:text-amethyst-900 duration-300"
-            >
-              SIGN UP
-            </a>
-          </span>
+          <Login handleOpenModal={handleOpenModal} />
         </div>
 
         {openModal && <ModalForgotPassword openModal={handleOpenModal} />}
