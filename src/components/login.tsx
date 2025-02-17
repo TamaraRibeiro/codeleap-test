@@ -1,6 +1,17 @@
+import { useNavigate } from "react-router";
 import Button from "./button";
 
-export default function Login({handleOpenModal}: {handleOpenModal: () => void}) {
+export default function Login({
+  handleOpenModal,
+}: {
+  handleOpenModal: () => void;
+}) {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    navigate("/home");
+  }
+
   return (
     <>
       <div className="space-y-5 px-2 flex flex-col">
@@ -36,12 +47,15 @@ export default function Login({handleOpenModal}: {handleOpenModal: () => void}) 
             Forgot your password?
           </button>
         </div>
-        <Button text="login" />
+        <Button text="login" action={handleLogin} />
       </div>
 
       <span className="text-sm font-semibold text-amethyst-600">
         Don't have an account?{" "}
-        <a href="/create-account" className="underline hover:text-amethyst-900 duration-300">
+        <a
+          href="create-account"
+          className="underline hover:text-amethyst-900 duration-300"
+        >
           SIGN UP
         </a>
       </span>
