@@ -1,30 +1,55 @@
-import { Sun } from "@phosphor-icons/react";
 import Button from "./button";
 import CardPost from "./card-post";
+import { useState } from "react";
+import ModalCreatePost from "./modal-new-post";
+import { Post } from "../types/types";
+import SwitchMode from "./switch-mode";
 
 export default function Home() {
-  return (
-    <div className="bg-amethyst-50 rounded-lg w-full h-screen relative px-2.5 pt-16 pb-5">
-      {/* switch button */}
-      <div className="absolute right-4 top-4">
-        <div className="relative border border-amethyst-900 w-16 bg-amethyst-100 h-6 rounded-full flex items-center justify-end">
-          {/* SWITCH SUN */}
-          <div className="absolute -right-1.5 rounded-full p-2 bg-white size-8 shadow-md">
-            <Sun className="text-amethyst-950" />
-          </div>
-          {/* SWITCH MOON */}
-          {/* <div className="absolute -left-1.5 rounded-full p-2 bg-white size-8 shadow-md">
-              <Moon className="text-amethyst-950" />
-            </div> */}
-        </div>
-      </div>
-      {/* switch button */}
+  const [openModalCreatePost, setModalCreatePostOpen] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [editPost, setEditPost] = useState<{ post: Post; index: number } | null>(null)
 
-      <div className="space-y-8">
-        <Button text="create a post" />
-        {/* map content here */}
-        <CardPost />
+  function handleOpenModalCreatePost() {
+    setEditPost(null)
+    setModalCreatePostOpen(!openModalCreatePost);
+  }
+
+  function handleDeletePost(index: number) {
+    alert("Are you sure you want to delete this post?")
+    setPosts((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function handleEditPost(post: Post, index: number) {
+    setEditPost({ post, index });
+    setModalCreatePostOpen(true);
+  }
+
+  function handleSaveEditedPost(newPost: Post, index: number | null) {
+    if (index !== null) {
+      setPosts((prev) =>
+        prev.map((post, idx) => (idx === index ? newPost : post))
+      );
+    } else {
+      setPosts((prev) => [newPost, ...prev]);
+    }
+    setModalCreatePostOpen(false);
+  }
+
+  return (
+    <div className="bg-amethyst-50 rounded-lg w-full h-full min-h-screen flex justify-center relative px-2.5 pb-5">
+
+      <SwitchMode />
+
+      <div className="space-y-8 mt-16 flex flex-col items-center min-w-94">
+        <Button text="create a post" action={handleOpenModalCreatePost} />
+        {posts.map((post, index) => (<CardPost key={index} title={post.title} content={post.content} deletePost={() => handleDeletePost(index)} editPost={() => handleEditPost(post, index)}/>) )}
       </div>
+
+      {openModalCreatePost && (
+        <ModalCreatePost openModalCreatePost={handleOpenModalCreatePost} savePost={handleSaveEditedPost}
+        editPost={editPost} />
+      )}
     </div>
   );
 }
